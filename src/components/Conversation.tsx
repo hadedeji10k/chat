@@ -26,7 +26,7 @@ const Conversation = ({
     <div
       className={`${
         selectedUser?.id === user.id ? "bg-blue-600" : "bg-gray-300"
-      } flex flex-row px-2 py-2 gap-x-3 mb-2 cursor-pointer`}
+      } flex flex-row px-2 py-2 gap-x-3 cursor-pointer`}
       onClick={selectConvoUser}
     >
       <div>

@@ -67,7 +67,7 @@ const UserChat = () => {
     <>
       {selectedUser?.id ? (
         <>
-          <div className="bg-gray-200 flex items-center py-4 pl-6 pr-4">
+          <div className="bg-gray-200 flex items-center py-2 pl-6 pr-4">
             <div>
               <img src={viteLogo} className="w-[30px] h-[50px] rounded-[50%]" />
             </div>
@@ -75,11 +75,11 @@ const UserChat = () => {
           </div>
           <div
             ref={convoElementRef}
-            className="w-full flex flex-col flex-1 overflow-y-scroll no_scrollbar"
+            className="w-full flex flex-col flex-1 overflow-y-scroll no_scrollbar overscroll-y-contain"
           >
             <div className="mt-auto flex flex-col">
-              {selectedConvo.map((message) => (
-                <Message message={message} />
+              {selectedConvo.map((message, index) => (
+                <Message key={index} message={message} />
               ))}
             </div>
           </div>

@@ -22,18 +22,13 @@ const EnterPhone = ({
       <h3 className="text-lg font-semibold mb-4">What's your phone number?</h3>
 
       <div className="w-full border-gray-400 border-2 mb-5 rounded-md flex flex-row p-2 gap-x-2">
-        <div>
-          <select
-            className="min-w-[70px] bg-transparent outline-none focus:outline-none px-2 py-2 bg-gray-100 rounded-lg"
+          <input
+            className="max-w-[45px] bg-transparent outline-none focus:outline-none px-2 py-2 bg-gray-100 rounded-lg"
             name=""
             id=""
-            onChange={(e) => setPhoneCode(e.target.value)}
-          >
-            {COUNTRIES_CODE.map((code) => (
-              <option value={code}>{code}</option>
-            ))}
-          </select>
-        </div>
+            defaultValue={"+1"}
+            disabled
+          />
         <input
           type="tel"
           defaultValue={phone}

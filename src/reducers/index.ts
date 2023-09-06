@@ -5,7 +5,7 @@ export interface MessageInterface {
   id: number;
   from: string;
   message: string;
-  date: Date;
+  date: Date | string;
 }
 
 export interface IUser {

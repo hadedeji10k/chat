@@ -1,10 +1,6 @@
-import { isToday, format, isYesterday, isValid } from "date-fns";
+import { isToday, format, isYesterday } from "date-fns";
 
 export const formatDateTime = (date: Date | string) => {
-   if (!isValid(date)) {
-     console.error("Invalid date provided to formatFriendlyDateTime:", date);
-     return null;
-   }
   const formDate = new Date(date);
   if (isToday(formDate)) {
     return format(formDate, "h:mm a");

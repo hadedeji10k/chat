@@ -24,7 +24,7 @@ const Chat = () => {
 
   return (
     <div className="w-full flex flex-row min-h-full">
-      <div className="w-[450px] max-w-[450px] bg-gray-200 min-h-full relative py-4">
+      <div className="w-[450px] max-w-[450px] bg-gray-200 min-h-full relative">
         <p
           className="absolute cursor-pointer bottom-2 right-2 rounded-[50%] h-12 w-12 flex justify-center items-center bg-blue-500 hover:bg-blue-600 transition-all duration-300 ease-in-out"
           onClick={addConversation}
@@ -34,7 +34,7 @@ const Chat = () => {
 
         <Conversations />
       </div>
-      <div className="w-full min-h-screen h-screen max-h-screen relative flex flex-col gap-y-3">
+      <div className="w-full min-h-screen h-screen max-h-screen relative flex flex-col">
         <UserChat />
       </div>
     </div>
