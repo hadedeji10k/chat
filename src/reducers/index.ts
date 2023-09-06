@@ -98,18 +98,10 @@ export const todoSlice = createSlice({
       const newChat = state.chats[userId].filter((chat) => chat.id !== id);
       state.chats[userId] = newChat;
     },
-    editMessage: (state: InitialState, { payload: { editedTodo } }) => {
-      console.log(state, editedTodo);
-      //   state.chats = state.chats.map((todo) =>
-      //     todo.id === editedTodo.id ? editedTodo : todo
-      //   );
-    },
   },
 });
 
-// actions for telling reducer what to do with state, they can also include payload for changing state
-export const { addMessage, deleteMessage, editMessage, addUser, selectUser } =
+export const { addMessage, deleteMessage, addUser, selectUser } =
   todoSlice.actions;
 
-// reducer to change the state
 export default todoSlice.reducer;

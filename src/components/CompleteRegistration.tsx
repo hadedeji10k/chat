@@ -1,8 +1,22 @@
-interface IProps {
-  setStep: any;
-}
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const CompleteRegistration = ({ setStep }: IProps) => {
+const CompleteRegistration = () => {
+  const navigate = useNavigate();
+
+  const submit = () => {
+    Swal.fire({
+      title: "Success!",
+      text: "You have successfully signed up",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then((result) => {
+      if (result.isConfirmed || result.isDenied || result.isDismissed) {
+        navigate("/chat");
+      }
+    });
+  };
+
   return (
     <div className="w-full flex flex-col items-center mb-4">
       <h3 className="text-lg font-semibold mb-5">What is your full name?</h3>
@@ -23,10 +37,7 @@ const CompleteRegistration = ({ setStep }: IProps) => {
       </div>
 
       <div className="w-full">
-        <button
-          onClick={() => setStep(3)}
-          className="w-full bg-gray-800 text-white"
-        >
+        <button onClick={submit} className="w-full bg-gray-800 text-white">
           Next
         </button>
       </div>
