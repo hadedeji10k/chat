@@ -4,6 +4,13 @@ import Swal from "sweetalert2";
 const CompleteRegistration = () => {
   const navigate = useNavigate();
 
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter" || e.key === "Return") {
+      submit()
+    }
+  };
+
+  // submit sign up
   const submit = () => {
     Swal.fire({
       title: "Success!",
@@ -26,6 +33,7 @@ const CompleteRegistration = () => {
           type="text"
           className="w-full bg-transparent outline-none focus:outline-none px-2 py-2"
           placeholder="Name"
+          autoFocus
         />
       </div>
       <div className="w-full border-gray-400 border-2 mb-5 rounded-md">
@@ -33,6 +41,7 @@ const CompleteRegistration = () => {
           type="text"
           className="w-full bg-transparent outline-none focus:outline-none px-2 py-2"
           placeholder="Last Name"
+          onKeyDown={handleKeyDown}
         />
       </div>
 

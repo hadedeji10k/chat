@@ -46,6 +46,7 @@ export const todoSlice = createSlice({
     ) => {
       const userId = uuidv4();
       state.users.push({ id: userId, name });
+      state.selectedUser = { id: userId, name };
       state.chats[userId] = [];
     },
     selectUser: (
@@ -61,12 +62,10 @@ export const todoSlice = createSlice({
       state: InitialState,
       { payload: { message, userId } }: { payload: AddMessage }
     ) => {
-      const chat = state.chats[userId];
-      const id = chat.length + 1;
+      const id = uuidv4();
       const date = new Date();
 
-      const userMessage = state.chats[userId];
-      const lastMessage = userMessage[userMessage.length - 1];
+      const lastMessage = state.chats[userId][state.chats[userId].length - 1];
 
       let from = "";
 

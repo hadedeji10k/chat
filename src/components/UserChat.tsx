@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsArrowUp } from "react-icons/bs";
 import { RootState } from "../store";
 import { MessageInterface, addMessage } from "../reducers";
 import viteLogo from "../assets/react.svg";
-import { formatDateTime } from "../utils/helper";
+import Message from "./Message";
 
 const UserChat = () => {
-  const dispach = useDispatch();
+  const dispatch = useDispatch();
   const chats = useSelector((state: RootState) => state.chats.chats);
   const selectedUser = useSelector(
     (state: RootState) => state.chats.selectedUser
@@ -15,8 +15,12 @@ const UserChat = () => {
 
   const [message, setMessage] = useState("");
 
+  // ref to manage the converstion element
+  const convoElementRef = useRef<HTMLDivElement>(null);
+
   const [selectedConvo, setSelectedConvo] = useState<MessageInterface[]>([]);
 
+  // change the conversation to the selected user's conversation
   useEffect(() => {
     if (selectedUser) {
       const newChats = chats[selectedUser.id];
@@ -26,37 +30,36 @@ const UserChat = () => {
     }
   }, [selectedUser, chats]);
 
+  //  This useEffect is used for scrolling to the bottom of the conversation when a new conversation is added
   useEffect(() => {
-    const convoElement = document.getElementById("convoElement");
-    if (convoElement) {
+    if (convoElementRef && convoElementRef.current !== null) {
       setTimeout(() => {
-        convoElement.scrollTo({
+        convoElementRef.current!.scrollTo({
           left: 0,
-          top: convoElement.scrollHeight,
+          top: convoElementRef.current!.scrollHeight,
           behavior: "smooth",
         });
       }, 300);
     }
   }, [selectedUser, chats]);
 
+  // function to handle addChat
   const addChat = () => {
-    if(message.length <= 0) {
-      return
-    }
-    dispach(
+    if (message.trim() === "") return;
+
+    dispatch(
       addMessage({
-        message: message,
+        message: message.trim(),
         userId: selectedUser?.id!,
       })
     );
-    setMessage(() => {
-      return "";
-    });
+    setMessage("");
   };
 
+  // this function is to handle addChat when enter is pressed or return key
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter" || e.key === "Return") {
-      addChat()
+      addChat();
     }
   };
 
@@ -71,36 +74,14 @@ const UserChat = () => {
             <p className="text-xl font-semibold ml-3">{selectedUser.name}</p>
           </div>
           <div
-            id="convoElement"
+            ref={convoElementRef}
             className="w-full flex flex-col flex-1 overflow-y-scroll no_scrollbar"
           >
-            {selectedConvo.map((item) => (
-              <>
-                {item.from === "me" ? (
-                  <div className="w-full flex items-end justify-end">
-                    <div className="chat-message receiver max-w-[70%]">
-                      <div className="message-content">
-                        <p className="text-sm font-medium">{item.message}</p>
-                        <p className="text-right text-[10px] font-normal">
-                          {formatDateTime(item.date)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="w-full flex items-start justify-start">
-                    <div className="chat-message sender !bg-gray-200 max-w-[70%]">
-                      <div className="message-content text-black">
-                        <p className="text-sm font-medium">{item.message}</p>
-                        <p className="text-right text-[10px] font-normal">
-                          {formatDateTime(item.date)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </>
-            ))}
+            <div className="mt-auto flex flex-col">
+              {selectedConvo.map((message) => (
+                <Message message={message} />
+              ))}
+            </div>
           </div>
           <div className="pb-4 w-full px-3 py-2 flex flex-row justify-center items-center gap-x-5">
             <input
@@ -112,7 +93,7 @@ const UserChat = () => {
               onKeyDown={handleKeyDown}
             />
             <p
-              className="cursor-pointer bottom-2 right-2 rounded-[50%] h-10 w-10 flex justify-center items-center bg-blue-600"
+              className="cursor-pointer bottom-2 right-2 rounded-[50%] p-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 transition-all duration-300 ease-in-out"
               onClick={addChat}
             >
               <BsArrowUp fill="white" size="1.5rem" />

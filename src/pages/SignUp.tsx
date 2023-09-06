@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Logo from "../assets/logo.png"
 import ConfirmPhone from "../components/ConfirmPhone";
 import CompleteRegistration from "../components/CompleteRegistration";
 import EnterPhone from "../components/EnterPhone";
@@ -8,14 +9,21 @@ const SignUp = () => {
 
   const [phone, setPhone] = useState("");
 
+  const [phoneCode, setPhoneCode] = useState("+93")
+
   return (
     <div className="w-full h-full flex flex-col justify-center items-center max-w-xs mx-auto">
-      <h2 className="text-3xl font-bold mb-10">Sign Up</h2>
+      <img src={Logo} alt="Logo" className="max-w-[200px]" />
 
       {step === 1 ? (
-        <EnterPhone setStep={setStep} setPhone={setPhone} phone={phone} />
+        <EnterPhone
+          setStep={setStep}
+          setPhone={setPhone}
+          setPhoneCode={setPhoneCode}
+          phone={phone}
+        />
       ) : step === 2 ? (
-        <ConfirmPhone phone={phone} setStep={setStep} />
+        <ConfirmPhone phone={phone} phoneCode={phoneCode} setStep={setStep} />
       ) : step === 3 ? (
         <CompleteRegistration />
       ) : null}

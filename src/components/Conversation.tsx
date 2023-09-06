@@ -3,6 +3,7 @@ import { MessageInterface, IUser, selectUser } from "../reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { formatDateTime } from "../utils/helper";
+import { useCallback } from "react";
 
 const Conversation = ({
   lastMessage,
@@ -16,13 +17,10 @@ const Conversation = ({
     (state: RootState) => state.chats.selectedUser
   );
 
-  const selectConvoUser = () => {
-    dispatch(
-      selectUser({
-        userId: user.id,
-      })
-    );
-  };
+  // select conversation
+  const selectConvoUser = useCallback(() => {
+    dispatch(selectUser({ userId: user.id }));
+  }, [dispatch, user.id]);
 
   return (
     <div

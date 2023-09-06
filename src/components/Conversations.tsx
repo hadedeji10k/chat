@@ -6,7 +6,8 @@ const Conversations = () => {
   const chats = useSelector((state: RootState) => state.chats.chats);
   const users = useSelector((state: RootState) => state.chats.users);
 
-  const getUserLastChat = (userId: string) => {
+  // function to get users last message, for display on the conversation list
+  const getLastMessageForUser = (userId: string) => {
     const chat = chats[userId];
     if(chat && chat.length > 0) {
         return chat[chat.length - 1]!;
@@ -17,12 +18,17 @@ const Conversations = () => {
 
   return (
     <div>
-      {users.map((user) => (
-        <Conversation
-          lastMessage={getUserLastChat(user.id)}
-          user={user}
-        />
-      ))}
+      {users.length > 0 ? (
+        users.map((user) => (
+          <Conversation
+            key={user.id}
+            lastMessage={getLastMessageForUser(user.id)}
+            user={user}
+          />
+        ))
+      ) : (
+        <p>No conversations available.</p>
+      )}
     </div>
   );
 };
